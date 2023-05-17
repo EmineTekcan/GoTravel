@@ -40,7 +40,7 @@ export default function App() {
           marginHorizontal: 20,
         },
         headerPressOpacity: 0.3,
-        headerShown:false
+        headerShown: false
       }}>
         <Tab.Screen
           name='Home'
@@ -56,9 +56,8 @@ export default function App() {
           component={SearchScreen}
           options={{
             tabBarIcon: ({ focused, color }) => focused ?
-              <FontAwesome name="search" size={24} color={colors.white} /> :
-              <FontAwesome name="search" size={24} color={colors.white} />
-
+              <FontAwesome name="search" size={24} color={colors.white} />:
+              <Ionicons name="search-outline" size={24} color={colors.white} /> 
           }}
         />
         <Tab.Screen
