@@ -2,14 +2,13 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import HomeScreen from './screens/HomeScreen';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import LandingScreen from './screens/LandingScreen';
-import SearchScreen from './screens/SearchScreen'
-import FavouriteScreen from './screens/FavouriteScreen'
-import ProfileScreen from './screens/ProfileScreen'
-import colors from './constants/colors';
-
+import colors from './src/constants/colors'
+import HomeScreen from './src/screens/HomeScreen'
+import LandingScreen from './src/screens/LandingScreen'
+import ProfileScreen from './src/screens/ProfileScreen'
+import FavouriteScreen from './src/screens/FavouriteScreen'
+import SearchScreen from './src/screens/SearchScreen'
 import { Feather } from '@expo/vector-icons';
 import { Foundation } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';

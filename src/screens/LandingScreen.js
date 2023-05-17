@@ -37,7 +37,7 @@ const LandingScreen = () => {
         <Animatable.Image
           animation="fadeInUp"
           easing="ease-in-circ"
-          source={require('../assets/hero.png')}
+          source={require('../../assets/hero.png')}
           className="object-cover w-[340] h-full " />
       </View>
 
