@@ -23,6 +23,7 @@ export default function App() {
   const Tabs = () => {
     return (
       <Tab.Navigator screenOptions={{
+        tabBarHideOnKeyboard:true,
         lazy: true,
         tabBarStyle: {
           marginHorizontal: 20,
