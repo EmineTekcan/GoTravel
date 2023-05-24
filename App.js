@@ -14,6 +14,7 @@ import { Foundation } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
+import ItemScreen from './src/screens/ItemScreen';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -89,6 +90,7 @@ export default function App() {
       <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName='Landing'>
         <Stack.Screen name='Landing' component={LandingScreen} />
         <Stack.Screen name='Main' component={Tabs} />
+        <Stack.Screen name='Item' component={ItemScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

@@ -1,34 +1,29 @@
-import { StyleSheet, Text, View, Image, TextInput, ScrollView, TouchableOpacity } from 'react-native'
-import React, { useState } from 'react'
+import { StyleSheet, Text, View, Image, TextInput, ScrollView, TouchableOpacity, ActivityIndicator, FlatList } from 'react-native'
+import React, { useLayoutEffect, useState } from 'react'
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import axios from 'axios';
 import MenuContainer from '../components/MenuContainer';
-import { Hotels, Attractions, Restaurants } from '../../assets';
+import { Hotels, Attractions, Restaurants, NotFound, Tour } from '../../assets';
 import { Entypo } from '@expo/vector-icons';
 import ItemCard from '../components/ItemCard';
+import { useEffect } from 'react';
+import { getPlaces,getRestaurants } from '../../api/index'
 
 const HomeScreen = () => {
 
-  const [tur, setTur] = useState("restaurants")
+  const [tur, setTur] = useState("attractions")
+  const [isLoading, setIsLoading] = useState(true)
+  const [mainData, setMainData] = useState([])
 
-
-  const getPlace = (text) => {
-    let response = axios.request({
-      method: 'GET',
-      url: 'https://travel-advisor.p.rapidapi.com/locations/v2/auto-complete',
-      params: {
-        query: text,
-        lang: 'en_US',
-        units: 'km'
-      },
-      headers: {
-        'X-RapidAPI-Key': '6576653bb4mshbaa5503b12cec53p140bbajsn545e0756ea61',
-        'X-RapidAPI-Host': 'travel-advisor.p.rapidapi.com'
-      }
-    }).then((res) => console.log(res.data))
-
-  }
-
+  useEffect(() => {
+    setIsLoading(true);
+    data = getRestaurants().then(response => {
+      setMainData(response)
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 1000)
+    });
+  }, [])
   return (
     <View className="flex-1 bg-white relative">
 
@@ -65,19 +60,44 @@ const HomeScreen = () => {
           <Entypo name="arrow-long-right" size={24} color="#A0C4C7" />
         </TouchableOpacity>
       </View>
-      <ScrollView>
 
-        <View className="px-4 mt-6 flex-row items-center justify-evenly flex-wrap">
-          <ItemCard imgSrc={"https://mediatrend.mediamarkt.com.tr/wp-content/uploads/2017/02/2017_subat_03.jpg"} title="Doga" location="Ormanlık" />
-          <ItemCard imgSrc={"https://lavinya.net/wp-content/uploads/2022/11/54e79a-lavanta-cicegi-tarlasi-manzara-lavender-field-scaled.jpeg"} title="Doga" location="Ormanlık" />
-          <ItemCard imgSrc={"https://lavinya.net/wp-content/uploads/2022/11/54e79a-lavanta-cicegi-tarlasi-manzara-lavender-field-scaled.jpeg"} title="Doga" location="Ormanlık" />
+      {isLoading ? (<View className="flex-1 items-center justify-center">
+        <ActivityIndicator size="large" color="#2C7379" />
+      </View>) :
+        (
+          mainData?.length > 0 ? (
+            <FlatList
+              showsHorizontalScrollIndicator={false}
+              className="flex w-full "
+              numColumns={2}
+              contentContainerStyle={
+                {
+                  alignItems: "center",
+                }
+              }
+              zoomScale={true}
+              data={mainData}
+              renderItem={({ item, index }) => (
+                <ItemCard
+                  data={item}
+                  key={index}
+                  imgSrc={item.photo?.images?.small?.url}
+                  location={item.location_string}
+                  title={item.name}
+                />
+              )}
+            />
+          ) : (
 
-          <ItemCard imgSrc={"https://lavinya.net/wp-content/uploads/2022/11/54e79a-lavanta-cicegi-tarlasi-manzara-lavender-field-scaled.jpeg"} title="Doga" location="Ormanlık" />
+            <View className="items-center justify-center flex-1 space-y-3">
+              <Image source={NotFound} className="w-16 h-16" />
+              <Text className="text-[#2C7379] font-semibold text-base">Opps... No Data Found</Text>
+            </View>
 
-        </View>
 
-      </ScrollView>
-
+          )
+        )
+      }
     </View >
   )
 }
