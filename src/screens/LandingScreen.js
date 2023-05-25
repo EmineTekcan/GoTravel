@@ -38,7 +38,7 @@ const LandingScreen = () => {
           animation="fadeInUp"
           easing="ease-in-circ"
           source={require('../../assets/hero.png')}
-          className="object-cover w-[340] h-full " />
+          className="object-cover w-full h-full " />
       </View>
 
       {/* Button Section */}

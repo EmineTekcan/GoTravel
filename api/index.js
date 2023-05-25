@@ -19,7 +19,6 @@ export const getPlaces = async () => {
 
   try {
     const { data } = await axios.request(options);
-    console.log(data?.data[0])
     return data?.data;
   } catch (error) {
     console.error(error);
@@ -45,7 +44,6 @@ export const getRestaurants = async () => {
 
   try {
     const { data } = await axios.request(options);
-    console.log(data?.data[0])
     return data?.data;
   } catch (error) {
     console.error(error);

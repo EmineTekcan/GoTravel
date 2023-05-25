@@ -1,19 +1,19 @@
-import { StyleSheet, Text, View, Image, TextInput, ScrollView, TouchableOpacity, ActivityIndicator, FlatList } from 'react-native'
-import React, { useLayoutEffect, useState } from 'react'
-import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
-import axios from 'axios';
+import { StyleSheet, Text, View, Image, TouchableOpacity, ActivityIndicator, FlatList, TextInput } from 'react-native'
+import React, { useState } from 'react'
 import MenuContainer from '../components/MenuContainer';
 import { Hotels, Attractions, Restaurants, NotFound, Tour } from '../../assets';
 import { Entypo } from '@expo/vector-icons';
 import ItemCard from '../components/ItemCard';
 import { useEffect } from 'react';
-import { getPlaces,getRestaurants } from '../../api/index'
+import { getRestaurants } from '../../api/index'
+import { useNavigation } from '@react-navigation/native';
 
 const HomeScreen = () => {
 
-  const [tur, setTur] = useState("attractions")
+  const [tur, setTur] = useState("restaurants")
   const [isLoading, setIsLoading] = useState(true)
   const [mainData, setMainData] = useState([])
+  const navigation =useNavigation();
 
   useEffect(() => {
     setIsLoading(true);
@@ -24,6 +24,7 @@ const HomeScreen = () => {
       }, 1000)
     });
   }, [])
+
   return (
     <View className="flex-1 bg-white relative">
 
@@ -38,14 +39,6 @@ const HomeScreen = () => {
         </View>
       </View>
 
-      {/* Search section <View className=" bg-white mx-4 rounded-xl shadow-md mt-4 h-12">
-        <TextInput
-          className="w-full h-full px-3 py-2"
-          placeholder='Search'
-          onChangeText={(text) => getPlace(text)}
-        />
-      </View> */}
-
       {/* menu section */}
       <View className="flex-row items-center justify-between mx-6 mt-6">
         <MenuContainer key={"hotel"} title="Hotels" imgSrc={Hotels} type={tur} setType={setTur} />
@@ -55,7 +48,7 @@ const HomeScreen = () => {
 
       <View className="flex-row items-center justify-between mx-6 my-2">
         <Text className="text-[24px] text-[#2C7379] font-bold">Top Tips</Text>
-        <TouchableOpacity className="flex-row space-x-3 ">
+        <TouchableOpacity onPress={()=>navigation.navigate("Search")} className="flex-row space-x-3 ">
           <Text className="text-[#2C7379] text-base font-semibold">Explore</Text>
           <Entypo name="arrow-long-right" size={24} color="#A0C4C7" />
         </TouchableOpacity>
